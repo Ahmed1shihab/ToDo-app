@@ -1,0 +1,27 @@
+@use "colors" as *;
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Montserrat", sans-serif;
+  display: grid;
+  justify-content: center;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", sans-serif;
+  color: $lightBlack;
+}
+a {
+  text-decoration: none;
+}

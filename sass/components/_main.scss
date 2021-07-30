@@ -1,0 +1,228 @@
+@use "../util" as *;
+@use "../global" as g;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: rem(35);
+  position: relative;
+
+  h1 {
+    font-size: rem(36);
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    margin-top: rem(55);
+    padding-bottom: rem(15);
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 125%;
+      height: 1px;
+      background-color: g.$lightGray;
+      bottom: 0;
+    }
+
+    p {
+      color: g.$lightBlack;
+      font-weight: 600;
+      font-size: rem(14);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    p:not(:last-of-type) {
+      margin-right: rem(120);
+    }
+
+    %activeLink {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      height: 4px;
+      width: 10px;
+      background-color: g.$mainColor;
+      border-radius: 4px 4px 0 0;
+    }
+
+    p:first-of-type.active::after {
+      @extend %activeLink;
+      left: -15px;
+      width: 13%;
+    }
+
+    p:nth-of-type(2).active::after {
+      @extend %activeLink;
+      left: 127px;
+      width: 19%;
+    }
+
+    p:last-of-type.active::after {
+      @extend %activeLink;
+      left: 293px;
+      width: 29%;
+    }
+  }
+
+  &__add-todo {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-family: "Montserrat", sans-serif;
+
+    input[type="text"] {
+      width: 395px;
+      height: 50px;
+      padding: 20px;
+      font-size: 14px;
+      border: 1px solid g.$lightGray;
+      border-radius: 12px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      width: 109px;
+      height: 50px;
+      background: g.$mainColor;
+      box-shadow: 0px 2px 6px rgb(127 177 243 / 40%);
+      border-radius: 12px;
+      border: none;
+      color: g.$white;
+      font: 600 rem(14) "Montserrat", sans-serif;
+      cursor: pointer;
+    }
+  }
+
+  &__todos {
+    position: absolute;
+    top: 233px;
+    left: 0;
+    width: 100%;
+
+    &__todo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 500;
+
+      &:not(:last-of-type) {
+        margin-bottom: 15px;
+      }
+
+      &.hide {
+        display: none;
+        margin: 0;
+      }
+
+      div {
+        display: inline-block;
+      }
+
+      input[type="checkbox"] {
+        position: relative;
+        width: 1.5em;
+        height: 1.5em;
+        color: #363839;
+        border: 1px solid #bdc1c6;
+        border-radius: 4px;
+        appearance: none;
+        outline: 0;
+        cursor: pointer;
+        transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+        &::before {
+          position: absolute;
+          content: "";
+          display: block;
+          top: 1px;
+          left: 6px;
+          width: 6px;
+          height: 12px;
+          border-style: solid;
+          border-color: g.$white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+          opacity: 0;
+        }
+        &:checked {
+          color: g.$white;
+          border-color: #06842c;
+          background: #06842c;
+          &::before {
+            opacity: 1;
+          }
+          ~ label::before {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            bottom: 0;
+          }
+        }
+      }
+
+      label {
+        position: relative;
+        bottom: 3px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 0 0.25em 0;
+        user-select: none;
+        bottom: 3px;
+        &::before {
+          position: absolute;
+          content: attr(data-content);
+          color: #9c9e9f;
+          clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
+          text-decoration: line-through;
+          text-decoration-thickness: 3px;
+          text-decoration-color: #363839;
+          transition: clip-path 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          bottom: 0;
+        }
+      }
+
+      form[action="delete.php"] {
+        display: inline-block;
+
+        button {
+          cursor: pointer;
+          outline: none;
+          border: none;
+          background: transparent;
+        }
+      }
+    }
+
+    form.hidden {
+      display: none;
+    }
+
+    form[action="deleteAll.php"] {
+      float: right;
+      margin-top: 30px;
+
+      button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 124px;
+        background-color: g.$red;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+  }
+}
